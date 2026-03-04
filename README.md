@@ -5,7 +5,7 @@ It includes a ready-to-use dashboard and PivotTable analysis to understand churn
 
 ## Open This File First
 **Download and open:**
-- `Databel_Churn_Final.xlsx`
+- `Databel_Customer_Churn_Analysis.xlsx`
 
 > If Excel shows a security warning (“Protected View”), click **Enable Editing**.
 > Then go to the **Overview** sheet first.
