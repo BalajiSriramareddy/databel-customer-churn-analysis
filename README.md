@@ -1,64 +1,37 @@
-# Databel Customer Churn Analysis (Excel Dashboard)
+# Databel Customer Churn Analysis (Excel)
 
-This repository contains an Excel-based churn analysis case study using the Databel telecom dataset.
-It includes a ready-to-use dashboard and PivotTable analysis to understand churn drivers, with a focus on competitor-driven churn.
+An Excel dashboard and set of PivotTables looking at why customers leave Databel, a telecom provider. The focus is on customers lost to competitors, since they are the largest group.
 
-## Open This File First
-**Download and open:**
-- `Databel_Customer_Churn_Analysis.xlsx`
+Databel has 6,687 customers in the data and 1,796 of them churned, a churn rate of 26.9%.
 
-> If Excel shows a security warning (“Protected View”), click **Enable Editing**.
-> Then go to the **Overview** sheet first.
+[Download the workbook](https://github.com/BalajiSriramareddy/databel-customer-churn-analysis/raw/main/Databel_Customer_Churn_Analysis.xlsx) and start on the Overview sheet.
 
----
+## Findings
 
-## 🧭 How to Navigate the Workbook (Quick Tour)
+Competitors account for 45% of all churn. Within that group, a better offer (38%) and better devices (37%) are the main reasons, well ahead of more data (14%) and faster download speeds (12%). The single biggest reason outside competitors is the attitude of support staff, at 11% of all churned customers.
 
-### 1) Overview (Dashboard)
-**Sheet: `Overview`**
-- Top KPIs: **Total Customers**, **Churned Customers**, **Churn Rate %**
-- Visuals: churn drivers and competitor churn breakdown
-- This is the stakeholder-facing view.
+Customers on unlimited data plans churn at 32.1%, double the 16.1% on capped plans. The gap is widest among light users: customers using under 5 GB a month churn at 34.7% on an unlimited plan and 12.3% on a capped one. They are paying for data they don't use, so a cheaper competitor offer is easy to accept.
 
-### 2) Churn Analysis (Deep Dives)
-**Sheet: `Churn Analysis`**
-Contains PivotTables that answer:
-- Churn by **Churn Category** and **Churn Reason** (Competitor focus)
-- Churn by **Unlimited Plan** and **Grouped Consumption**
-- Churn by **Intl Plan** and **State** (includes Top 25 states filter + heatmap)
-- Churn by **Account Length** and how it differs by **Contract Type**
-- Churn by **Age brackets** (10-year groups) with customer count + churn rate
+Month-to-month customers churn at over 70% in every tenure band up to four years, and at 82% in their first year. One- and two-year contracts mostly stay below 20%, so contract type separates churners far more than tenure does.
 
-### 3) Databel - Aggregate (Data + Features)
-**Sheet: `Databel - Aggregate`**
-- Main dataset table: **Aggregate**
-- Added fields used in analysis:
-  - `Churned` (Yes=1, No=0)
-  - `Demographics` (Under 30 / Senior / Other)
-  - `Grouped Consumption` (<5 GB / 5–10 GB / 10+ GB)
+Seniors churn at 38.5% against 24.5% for other adults and 23.0% for under-30s. By age band, churn climbs from 22% (19 to 28) to 44% (79 to 88).
 
----
+International-plan churn varies a lot by state. California's international-plan customers churn at 75%, with Indiana at 67% and New Hampshire at 63%. These groups are small, so the figures need checking before anyone acts on them.
 
-## 🔁 Refresh Instructions (If something looks wrong)
-If PivotTables don’t update:
-1. Go to **Data → Refresh All**
-2. Or click a PivotTable → **Right-click → Refresh**
+## What's in the workbook
 
-If you add new data rows:
-- Make sure they are added inside the **Aggregate** table so pivots update correctly.
+| Sheet | Contents |
+|---|---|
+| Overview | Dashboard: total customers, churned customers, churn rate, and charts of churn drivers and competitor churn |
+| Churn Analysis | PivotTables by demographic group, age band, data plan and usage, international plan by state, and tenure by contract type |
+| Customer Pivots | Churn by category and reason, with the competitor reasons broken down |
+| Databel - Aggregate | The analysis table, with added fields `Churned` (1/0), `Demographics` (Under 30 / Senior / Other) and `Grouped Consumption` (<5 GB / 5 to 10 GB / 10+ GB) |
+| Databel - Customer | Customer-level source data, 6,687 rows |
 
----
+If Excel opens it in Protected View, click Enable Editing. If a PivotTable looks out of date, use Data > Refresh All. New rows need to go inside the Aggregate table for the pivots to pick them up.
 
-## 📌 Key Insights (Summary)
-- **Competitor** is the highest contributing churn category.
-- **Unlimited plan** customers show higher churn; consumption banding helps validate whether heavy usage drives this.
-- **Intl plan churn** varies strongly by **state** (Top 25 states by churn rate are highlighted).
-- Churn tends to **decrease as account length increases**, but the pattern differs by **contract type**.
+## Tools
 
----
+Microsoft Excel: tables, PivotTables, calculated fields, PivotCharts and conditional formatting.
 
-## Tools Used
-- Microsoft Excel Desktop (Tables, PivotTables, Calculated Fields, Conditional Formatting, PivotCharts)
-
-## Author
-Balaji — MSc Data Science, University of Hertfordshire
+Balaji Manjulamma Sriramareddy · MSc Data Science, University of Hertfordshire · [LinkedIn](https://www.linkedin.com/in/balaji-sriramareddy/) · [Portfolio](https://balajisriramareddy.github.io/)
