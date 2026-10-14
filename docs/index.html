@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Databel Customer Churn Analysis</title>
+<meta name="description" content="An Excel dashboard and set of PivotTables on why customers leave Databel, a telecom provider, with a focus on the customers lost to competitors.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&display=swap">
+<style>
+  :root{
+    --bg:#F6F7F9; --surface:#FFFFFF; --surface-2:#EEF1F6;
+    --ink:#11151C; --ink-2:#3D4756; --muted:#6B7688;
+    --rule:#DCE1E9; --rule-strong:#C3CBD8; --accent:#1E46C8; --accent-soft:#E7ECFB;
+    --serif:"IBM Plex Serif",Georgia,serif;
+    --sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0B0F16; --surface:#121824; --surface-2:#1A2230;
+      --ink:#E6EBF3; --ink-2:#B4BECD; --muted:#808C9E;
+      --rule:#232D3D; --rule-strong:#334054; --accent:#7E9BFF; --accent-soft:#17224A;
+    }
+  }
+  body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased}
+  .wrap{max-width:840px; margin:0 auto; padding:0 24px 90px}
+  header{border-bottom:2px solid var(--ink); padding:56px 0 26px; display:flex; flex-direction:column; gap:14px}
+  .eyebrow{font-family:var(--mono); font-size:11.5px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:var(--accent)}
+  h1{font-family:var(--serif); font-weight:600; margin:0; font-size:clamp(32px,5.4vw,52px); line-height:1.06; letter-spacing:-.02em}
+  .sf{font-size:17px; color:var(--ink-2); max-width:60ch; margin:0}
+  .meta{display:flex; flex-wrap:wrap; gap:0 30px; font-family:var(--mono); font-size:12px; color:var(--muted); margin-top:2px}
+  .meta b{color:var(--ink-2); font-weight:500}
+  .links{display:flex; flex-wrap:wrap; gap:10px 22px; font-family:var(--mono); font-size:12.5px}
+  .links a{color:var(--accent); text-decoration:none}
+  .links a:hover{text-decoration:underline}
+  .kpis{display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); border:1px solid var(--rule); border-radius:3px; overflow:hidden; background:var(--surface); margin-top:6px}
+  .kpis div{padding:12px 15px; border-right:1px solid var(--rule)}
+  .kpis dt{font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin:0 0 3px}
+  .kpis dd{margin:0; font-family:var(--mono); font-size:17px; font-weight:500}
+  .note{background:var(--surface); border-left:2px solid var(--accent); padding:14px 17px; margin:26px 0 0; border-radius:0 3px 3px 0; font-size:14.5px; color:var(--ink-2); max-width:64ch}
+  .note strong{color:var(--ink)}
+  main h2{font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); font-weight:500; margin:44px 0 14px; padding-top:14px; border-top:1px solid var(--rule)}
+  main h3{font-family:var(--serif); font-size:20px; font-weight:600; margin:30px 0 8px}
+  main p, main li{color:var(--ink-2); max-width:68ch}
+  main a{color:var(--accent)}
+  main ol, main ul{padding-left:22px}
+  main li{margin-bottom:6px}
+  main table{border-collapse:collapse; width:100%; margin:14px 0 6px; font-size:14px; background:var(--surface); border:1px solid var(--rule)}
+  main th{font-family:var(--mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); font-weight:500; text-align:left; padding:9px 12px; border-bottom:1px solid var(--rule-strong)}
+  main td{padding:8px 12px; border-bottom:1px solid var(--rule)}
+  main td:not(:first-child), main th:not(:first-child){text-align:right}
+  main table.left td, main table.left th{text-align:left}
+  .tw{overflow-x:auto}
+  code{font-family:var(--mono); font-size:.88em; background:var(--surface-2); padding:1px 5px; border-radius:3px}
+  pre{background:var(--surface); border:1px solid var(--rule); border-radius:3px; padding:14px 16px; overflow-x:auto; font-size:13px; line-height:1.5}
+  pre code{background:none; padding:0}
+  footer{font-size:13.5px; color:var(--muted); padding-top:34px; max-width:64ch; border-top:1px solid var(--rule); margin-top:44px}
+  footer a{color:var(--accent)}
+  @media (max-width:600px){ .wrap{padding:0 16px 70px} header{padding-top:36px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Portfolio project · Customer churn</div>
+    <h1>Databel Customer Churn Analysis</h1>
+    <p class="sf">An Excel dashboard and set of PivotTables on why customers leave Databel, a telecom provider, with a focus on the customers lost to competitors.</p>
+    <div class="meta"><span><b>Source</b> 6,687 customers</span><span><b>Stack</b> Excel · PivotTables · PivotCharts</span><span><b>Status</b> Complete</span></div>
+    <dl class="kpis"><div><dt>Customers</dt><dd>6,687</dd></div><div><dt>Churned</dt><dd>1,796</dd></div><div><dt>Churn rate</dt><dd>26.9%</dd></div><div><dt>To competitors</dt><dd>45%</dd></div></dl>
+    <div class="links">
+      <a href="https://github.com/BalajiSriramareddy/databel-customer-churn-analysis">Code on GitHub ↗</a>
+      <a href="https://balajisriramareddy.github.io/#/project/databel">Portfolio</a>
+      <a href="https://www.linkedin.com/in/balaji-sriramareddy/">LinkedIn</a>
+    </div>
+  </header>
+
+  <div class="note"><strong>The headline finding.</strong> Light users on unlimited plans churn at 34.7%, against 12.3% for light users on capped plans. They pay for data they don't use, which leaves them open to a cheaper competitor offer.</div>
+
+  <main>
+<h2>Findings</h2>
+<p>Competitors account for 45% of all churn. Within that group, a better offer (38%) and better devices (37%) are the main reasons, well ahead of more data (14%) and faster download speeds (12%). The single biggest reason outside competitors is the attitude of support staff, at 11% of all churned customers.</p>
+<p>Customers on unlimited data plans churn at 32.1%, double the 16.1% on capped plans. The gap is widest among light users: customers using under 5 GB a month churn at 34.7% on an unlimited plan and 12.3% on a capped one. They are paying for data they don't use, so a cheaper competitor offer is easy to accept.</p>
+<p>Month-to-month customers churn at over 70% in every tenure band up to four years, and at 82% in their first year. One- and two-year contracts mostly stay below 20%, so contract type separates churners far more than tenure does.</p>
+<p>Seniors churn at 38.5% against 24.5% for other adults and 23.0% for under-30s. By age band, churn climbs from 22% (19 to 28) to 44% (79 to 88).</p>
+<p>International-plan churn varies a lot by state. California's international-plan customers churn at 75%, with Indiana at 67% and New Hampshire at 63%. These groups are small, so the figures need checking before anyone acts on them.</p>
+<h2>What's in the workbook</h2>
+<div class="tw"><table class="left">
+<thead>
+<tr>
+<th>Sheet</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Overview</td>
+<td>Dashboard: total customers, churned customers, churn rate, and charts of churn drivers and competitor churn</td>
+</tr>
+<tr>
+<td>Churn Analysis</td>
+<td>PivotTables by demographic group, age band, data plan and usage, international plan by state, and tenure by contract type</td>
+</tr>
+<tr>
+<td>Customer Pivots</td>
+<td>Churn by category and reason, with the competitor reasons broken down</td>
+</tr>
+<tr>
+<td>Databel - Aggregate</td>
+<td>The analysis table, with added fields <code>Churned</code> (1/0), <code>Demographics</code> (Under 30 / Senior / Other) and <code>Grouped Consumption</code> (&lt;5 GB / 5 to 10 GB / 10+ GB)</td>
+</tr>
+<tr>
+<td>Databel - Customer</td>
+<td>Customer-level source data, 6,687 rows</td>
+</tr>
+</tbody>
+</table></div>
+<p>If Excel opens it in Protected View, click Enable Editing. If a PivotTable looks out of date, use Data &gt; Refresh All. New rows need to go inside the Aggregate table for the pivots to pick them up.</p>
+<h2>Tools</h2>
+<p>Microsoft Excel: tables, PivotTables, calculated fields, PivotCharts and conditional formatting.</p>
+  </main>
+
+  <footer>
+    Balaji Manjulamma Sriramareddy · <a href="https://balajisriramareddy.github.io/">Portfolio</a> · <a href="https://www.linkedin.com/in/balaji-sriramareddy/">LinkedIn</a> · <a href="mailto:balaji.manjulamma@gmail.com">balaji.manjulamma@gmail.com</a>
+  </footer>
+</div>
+</body>
+</html>
